@@ -1,0 +1,16 @@
+---
+Dataset Evaluation
+========================================================
+
+```{r opts, echo = FALSE}
+knitr::opts_chunk$set(
+  fig.path = "images/",
+  dev=c('png','postscript')
+)
+```
+```{r library,  warning=FALSE, message=FALSE}
+library(preprocessCore) # normalize.quantiles
+library(pheatmap)
+library(matrixStats) # rowMedians
+library(swamp) # pca to annotation plot
+source("~/GitHub_box/R_data_func/PCAplt.R")```

@@ -1,0 +1,5 @@
+source("~/GitHub_box/R_data_func/PCAplt.R")
+source("~/GitHub_box/R_data_func/extractCluster.R")
+source("~/GitHub_box/R_data_func/removeConstantRow.R")
+source("~/GitHub_box/R_data_func/removeConstantCol.R")
+source("~/GitHub_box/R_data_func/boxplt.R")

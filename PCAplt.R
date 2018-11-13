@@ -4,7 +4,8 @@ PCAplt <- function(df = data.frame,pc=c(1,2),groupVector=NULL,sampleNameVector=N
     #data <- t(apply(df,1,scale)) # scale the data
     #data <- df
 
-    result.PCA <- prcomp(t(df),scale. = T)
+    #result.PCA <- prcomp(t(df),scale. = T)
+    result.PCA <- prcomp(t(df))
 
     #percent.PCA <- round((((result.PCA$sdev)^2 / sum(result.PCA$sdev^2))*100)[1:length(result.PCA$sdev)])
     percent.PCA <- round((((result.PCA$sdev)^2 / sum(result.PCA$sdev^2))*100))

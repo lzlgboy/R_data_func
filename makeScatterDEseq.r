@@ -26,7 +26,7 @@ write.table(list.Down,file=fileName.list.Down,quote=F,row.names=F,col.names=F)
 
 lab.Up <- paste("Up: ",count.Up)
 lab.Down <- paste("Down: ",count.Down)
-lab.NoChange <- paste("Up: ",count.NoChange)
+lab.NoChange <- paste("NoChange: ",count.NoChange)
 
 legend_title <- paste("FC: ",FC_threshold,"\n","Padj: ",padj_threshold,sep="")
 

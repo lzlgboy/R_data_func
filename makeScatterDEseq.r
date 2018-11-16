@@ -15,6 +15,15 @@ count.Up <- length(which(df.plot$Change == "Up"))
 count.Down <- length(which(df.plot$Change == "Down"))
 count.NoChange <- length(which(df.plot$Change == "NoChange"))
 
+list.Up        <- row.names(df)[which(df.plot$Change == "Up")]
+list.Down      <- row.names(df)[which(df.plot$Change == "Down")]
+
+fileName.list.Up   <- paste('./',xy_lab[2],'.vs.',xy_lab[1],'.padj.',padj_threshold,'.FC.',FC_threshold,'.Up.txt',sep="")
+fileName.list.Down <- paste('./',xy_lab[2],'.vs.',xy_lab[1],'.padj.',padj_threshold,'.FC.',FC_threshold,'.Down.txt',sep="")
+
+write.table(list.Up,file=fileName.list.Up,quote=F,row.names=F,col.names=F)
+write.table(list.Down,file=fileName.list.Down,quote=F,row.names=F,col.names=F)
+
 lab.Up <- paste("Up: ",count.Up)
 lab.Down <- paste("Down: ",count.Down)
 lab.NoChange <- paste("Up: ",count.NoChange)

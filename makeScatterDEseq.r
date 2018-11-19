@@ -1,6 +1,10 @@
 MakeScatterDESeq <- function(df, x=df$baseMean_x, y = df$baseMean_y, xy_lab= c("X","Y"),flag_logged = FALSE,flag_anno = FALSE, col_anno = c(), FC_threshold = 1.5, padj_threshold=0.05) {
 
-df.plot <- as.data.frame(cbind(x,y))
+require(ggplot2)
+
+df.plot <- as.data.frame(cbind(as.data.frame(x),as.data.frame(y)))
+
+
 df.plot$padj <- df$padj
 df.plot$log2FoldChange <- log((df.plot[,2]+0.1)/(df.plot[,1]+0.1),2) # Y/X
 
@@ -26,7 +30,9 @@ write.table(list.Down,file=fileName.list.Down,quote=F,row.names=F,col.names=F)
 
 lab.Up <- paste("Up: ",count.Up)
 lab.Down <- paste("Down: ",count.Down)
-lab.NoChange <- paste("NoChange: ",count.NoChange)
+#lab.NoChange <- paste("NoChange: ",count.NoChange)
+lab.NoChange <- paste("NoChange")
+
 
 legend_title <- paste("FC: ",FC_threshold,"\n","Padj: ",padj_threshold,sep="")
 

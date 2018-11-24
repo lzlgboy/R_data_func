@@ -19,7 +19,7 @@ count.Up <- length(which(df.plot$Change == "Up"))
 count.Down <- length(which(df.plot$Change == "Down"))
 count.NoChange <- length(which(df.plot$Change == "NoChange"))
 
-df.for.list <- df[,c("PeakID","Chr","Start","End")]
+df.for.list <- df[,c("Chr","Start","End","PeakID")]
 	
 list.Up        <- df.for.list[which(df.plot$Change == "Up"),]
 list.Down      <- df.for.list[which(df.plot$Change == "Down"),]

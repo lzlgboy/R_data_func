@@ -23,12 +23,15 @@ df.for.list <- df[,c("PeakID","Chr","Start","End")]
 	
 list.Up        <- df.for.list[which(df.plot$Change == "Up"),]
 list.Down      <- df.for.list[which(df.plot$Change == "Down"),]
-
+list.Change   <- rbind(list.Up,list.Down)
+	
 fileName.list.Up   <- paste('./',xy_lab[2],'.vs.',xy_lab[1],'.padj.',padj_threshold,'.FC.',FC_threshold,'.Up.txt',sep="")
 fileName.list.Down <- paste('./',xy_lab[2],'.vs.',xy_lab[1],'.padj.',padj_threshold,'.FC.',FC_threshold,'.Down.txt',sep="")
+fileName.list.Change <- paste('./',xy_lab[2],'.vs.',xy_lab[1],'.padj.',padj_threshold,'.FC.',FC_threshold,'.UpDown.txt',sep="")
 
 write.table(list.Up,file=fileName.list.Up,quote=F,row.names=F,col.names=F,sep="\t")
 write.table(list.Down,file=fileName.list.Down,quote=F,row.names=F,col.names=F,sep="\t")
+write.table(list.Change,file=fileName.list.Change,quote=F,row.names=F,col.names=F,sep="\t")
 
 lab.Up <- paste("Up: ",count.Up)
 lab.Down <- paste("Down: ",count.Down)

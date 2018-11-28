@@ -19,15 +19,18 @@ count.Up <- length(which(df.plot$Change == "Up"))
 count.Down <- length(which(df.plot$Change == "Down"))
 count.NoChange <- length(which(df.plot$Change == "NoChange"))
 
-df.for.list <- df[,c("Chr","Start","End","PeakID")]
+
+df$Change <- df.plot$Change
+df.ordered.by.FC <- df[order(df$log2FoldChange),]
+df.for.list <- df.ordered.by.FC[,c("Chr","Start","End","PeakID","log2FoldChange")]
 	
-list.Up        <- df.for.list[which(df.plot$Change == "Up"),]
-list.Down      <- df.for.list[which(df.plot$Change == "Down"),]
+list.Up        <- df.for.list[which(df.ordered.by.FC$Change == "Up"),]
+list.Down      <- df.for.list[which(df.ordered.by.FC$Change == "Down"),]
 list.Change   <- rbind(list.Up,list.Down)
 	
-fileName.list.Up   <- paste('./',xy_lab[2],'.vs.',xy_lab[1],'.padj.',padj_threshold,'.FC.',FC_threshold,'.Up.txt',sep="")
-fileName.list.Down <- paste('./',xy_lab[2],'.vs.',xy_lab[1],'.padj.',padj_threshold,'.FC.',FC_threshold,'.Down.txt',sep="")
-fileName.list.Change <- paste('./',xy_lab[2],'.vs.',xy_lab[1],'.padj.',padj_threshold,'.FC.',FC_threshold,'.UpDown.txt',sep="")
+fileName.list.Up   <- paste('./',xy_lab[2],'.vs.',xy_lab[1],'.padj.',padj_threshold,'.FC.',FC_threshold,'.Up.order.by.log2FC.txt',sep="")
+fileName.list.Down <- paste('./',xy_lab[2],'.vs.',xy_lab[1],'.padj.',padj_threshold,'.FC.',FC_threshold,'.Down.order.by.log2FC.txt',sep="")
+fileName.list.Change <- paste('./',xy_lab[2],'.vs.',xy_lab[1],'.padj.',padj_threshold,'.FC.',FC_threshold,'.UpDown.order.by.log2FC.txt',sep="")
 
 write.table(list.Up,file=fileName.list.Up,quote=F,row.names=F,col.names=F,sep="\t")
 write.table(list.Down,file=fileName.list.Down,quote=F,row.names=F,col.names=F,sep="\t")

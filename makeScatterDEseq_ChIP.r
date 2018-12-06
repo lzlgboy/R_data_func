@@ -28,6 +28,10 @@ list.Up        <- df.for.list[which(df.ordered.by.FC$Change == "Up"),]
 list.Down      <- df.for.list[which(df.ordered.by.FC$Change == "Down"),]
 list.Change   <- rbind(list.Up,list.Down)
 	
+list.Change   <- list.Change[order(list.Change$log2FoldChange),]
+list.Up   <- list.Up[rev(order(list.Up$log2FoldChange)),]
+list.Down   <- list.Down[order(list.Down$log2FoldChange),]
+	
 fileName.list.Up   <- paste('./',xy_lab[2],'.vs.',xy_lab[1],'.padj.',padj_threshold,'.FC.',FC_threshold,'.Up.order.by.log2FC.txt',sep="")
 fileName.list.Down <- paste('./',xy_lab[2],'.vs.',xy_lab[1],'.padj.',padj_threshold,'.FC.',FC_threshold,'.Down.order.by.log2FC.txt',sep="")
 fileName.list.Change <- paste('./',xy_lab[2],'.vs.',xy_lab[1],'.padj.',padj_threshold,'.FC.',FC_threshold,'.UpDown.order.by.log2FC.txt',sep="")

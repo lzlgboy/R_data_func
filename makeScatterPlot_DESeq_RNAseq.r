@@ -22,6 +22,7 @@ count.NoChange <- length(which(df.plot$Change == "NoChange"))
 
 
 df$Change <- df.plot$Change
+df$log2FoldChange <- df.plot$log2FoldChange
 df.ordered.by.FC <- df[order(df$log2FoldChange),]
 df.for.list <- df.ordered.by.FC[,c("Row.names","pval","padj","log2FoldChange")]
 	

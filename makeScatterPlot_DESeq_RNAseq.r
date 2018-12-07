@@ -23,7 +23,7 @@ count.NoChange <- length(which(df.plot$Change == "NoChange"))
 
 df$Change <- df.plot$Change
 df.ordered.by.FC <- df[order(df$log2FoldChange),]
-df.for.list <- df.ordered.by.FC[,c("Chr","Start","End","PeakID","log2FoldChange")]
+df.for.list <- df.ordered.by.FC[,c("Row.names","pval","padj","log2FoldChange")]
 	
 list.Up        <- df.for.list[which(df.ordered.by.FC$Change == "Up"),]
 list.Down      <- df.for.list[which(df.ordered.by.FC$Change == "Down"),]

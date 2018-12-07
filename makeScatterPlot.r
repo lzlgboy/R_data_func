@@ -1,5 +1,7 @@
 makeScatterPlot <- function(df, x=df$col_x, y = df$col_y, xy_lab= c("X","Y"),flag_logged = FALSE,flag_anno = FALSE, col_anno = c(), FC_threshold = 1.5, padj_threshold=0.05) {
 
+require(ggplot2)
+
 df.plot <- as.data.frame(cbind(x,y))
 df.plot$padj <- df$padj
 df.plot$log2FoldChange <- log((df.plot[,2]+1)/(df.plot[,1]+1),2) # Y/X

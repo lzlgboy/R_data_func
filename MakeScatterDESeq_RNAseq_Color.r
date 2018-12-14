@@ -1,8 +1,10 @@
 
 MakeScatterDESeq <- function(df, x=df$baseMean_x, y = df$baseMean_y, xy_lab= c("X","Y"),flag_logged = FALSE,flag_anno = FALSE, col_anno = c(), FC_threshold = 1.5, padj_threshold=0.05) {
 
+    
 require(ggplot2)
-
+require(ggrepel)
+	
 df.plot <- as.data.frame(cbind(as.data.frame(x),as.data.frame(y)))
 
 

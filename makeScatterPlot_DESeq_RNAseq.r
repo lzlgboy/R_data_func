@@ -51,14 +51,14 @@ lab.NoChange <- paste("NoChange: ",count.NoChange)
 legend_title <- paste("FC: ",FC_threshold,"\n","Padj: ",padj_threshold,sep="")
 
 ggplot(df.plot,aes(x=log(df.plot[,1]+1,2),y=log(df.plot[,2]+1,2))) +
-    geom_point(aes(color=Change),size=0.5) +
-	
-	theme_bw() +
-    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
-    scale_color_manual(values = c("blue", "azure4","red"),labels = c(lab.Down,lab.NoChange,lab.Up)) +
-	labs(colour=legend_title) + 
-
-	xlab(xy_lab[1]) +
-	ylab(xy_lab[2]) +
-	guides(colour = guide_legend(override.aes = list(size=5)))
+        geom_point(aes(alpha=-log10(padj),color=abs(log2FoldChange),size=-log10(padj))) +
+        geom_abline(linetype = "dashed",slope=1) +
+        
+        theme_bw() +
+        theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+        scale_color_gradientn(colours=pal(50)) +
+        labs(colour=legend_title) + 
+        
+        xlab(xy_lab[1]) +
+        ylab(xy_lab[2]) 
 }

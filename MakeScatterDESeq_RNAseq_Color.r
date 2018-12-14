@@ -16,6 +16,7 @@ df.plot$Change <- "NoChange"
 df.plot$Change[df$padj <= padj_threshold & df.plot$log2FoldChange > fc_log2_threshold] <- "Up" 
 df.plot$Change[df$padj <= padj_threshold & df.plot$log2FoldChange < -fc_log2_threshold] <- "Down" 
 
+
 count.Up <- length(which(df.plot$Change == "Up"))
 count.Down <- length(which(df.plot$Change == "Down"))
 count.NoChange <- length(which(df.plot$Change == "NoChange"))
@@ -50,15 +51,22 @@ lab.NoChange <- paste("NoChange: ",count.NoChange)
 
 legend_title <- paste("FC: ",FC_threshold,"\n","Padj: ",padj_threshold,sep="")
 
-ggplot(df.plot,aes(x=log(df.plot[,1]+1,2),y=log(df.plot[,2]+1,2))) +
-    geom_point(aes(color=Change),size=0.5) +
-	
-	theme_bw() +
-    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
-    scale_color_manual(values = c("blue", "azure4","red"),labels = c(lab.Down,lab.NoChange,lab.Up)) +
-	labs(colour=legend_title) + 
+# for color setting
+df.plot$Alpha[df.plot$Change == "NoChange"] <- 0 
+df.plot$padj[df.plot$Change == "NoChange"] <- 1 
+df.plot <- df.plot[df.plot$Change != "NoChange",] 
+df.plot$Alpha[df.plot$Change == "Up"] <- 0.5 
+df.plot$Alpha[df.plot$Change == "Down"] <- 0.5 
 
-	xlab(xy_lab[1]) +
-	ylab(xy_lab[2]) +
-	guides(colour = guide_legend(override.aes = list(size=5)))
+ggplot(df.plot,aes(x=log(df.plot[,1]+1,2),y=log(df.plot[,2]+1,2))) +
+        geom_point(aes(alpha=Alpha,color=abs(log2FoldChange),size=-log10(padj))) +
+        geom_abline(linetype = "dashed",slope=1) +
+        
+        theme_bw() +
+        theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+        scale_color_gradientn(colours=pal(70)) +
+        labs(colour=legend_title) + 
+        
+        xlab(xy_lab[1]) +
+        ylab(xy_lab[2]) 
 }

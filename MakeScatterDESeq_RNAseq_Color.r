@@ -1,5 +1,5 @@
 
-MakeScatterDESeq <- function(df, x=df$baseMean_x, y = df$baseMean_y, xy_lab= c("X","Y"), anno_FC_threshold = 20, anno_padj_threshold = 0.01, col_anno = c(), FC_threshold = 2, padj_threshold=0.05) {
+MakeScatterDESeq <- function(df, x=df$baseMean_x, y = df$baseMean_y, xy_lab= c("X","Y"), anno_FC_threshold = 5, anno_padj_threshold = 1e-100, col_anno = c(), FC_threshold = 2, padj_threshold=0.05,anno_list=NULL,anno_topN = 20) {
 
     
 require(ggplot2)
@@ -79,19 +79,30 @@ df.plot$Alpha[df.plot$Change == "Down"] <- 0.5
 df.plot$padj <- df.plot$padj + 1e-300   # so if padj == 0 then -log10 will not have value
 # for anno text
 log2_anno_FC_threshold <- log2(anno_FC_threshold)
-df.plot$Row.names <- as.character(df.plot$Row.names)
-df.plot$Row.names[df.plot$padj > anno_padj_threshold] <- ""
-df.plot$Row.names[df.plot$log2FoldChange < log2_anno_FC_threshold] <- ""
+df.plot$anno <- as.character(df.plot$Row.names)
+df.plot$anno[df.plot$padj > anno_padj_threshold] <- ""
+df.plot$anno[df.plot$log2FoldChange < log2_anno_FC_threshold] <- ""
 
 #df.plot[order(list.Change$log2FoldChange),]
 df.plot <- df.plot[rev(order(df.plot$log2FoldChange)),]
-plotNameVector <- df.plot$Row.names
-plotNameVector[100:length(plotNameVector)] <- ""
+plotNameVector <- df.plot$anno
+plotNameVector[anno_topN:(length(plotNameVector)-anno_topN)] <- ""
+
+
+df.plot <- df.plot[rev(order(df.plot$log2FoldChange)),]
+
+	
+if (!is.null(anno_list)){
+	plotNameVector <- as.character(df.plot$anno)
+	in.list <- plotNameVector %in% anno_list
+	plotNameVector[!in.list] <- ""
+}
 
 ggplot(df.plot,aes(x=log(df.plot[,1]+1,2),y=log(df.plot[,2]+1,2))) +
         geom_point(aes(alpha=Alpha,color=abs(log2FoldChange),size=-log10(padj))) +
         #geom_point(aes(alpha=Alpha,color=abs(log2FoldChange),size=pointSize)) +
-	geom_text_repel(aes(label = plotNameVector),nudge_y = 3,segment.color = 'grey80' ,size = 2,color="black") + 
+	#geom_text_repel(aes(label = plotNameVector),nudge_y = 3,segment.color = 'grey80' ,size = 2,color="black") + 
+	geom_text_repel(aes(label = plotNameVector),size = 2,color="black") + 
 	
         geom_abline(linetype = "dashed",slope=1) +
         

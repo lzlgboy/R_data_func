@@ -73,18 +73,20 @@ df.plot$pointSize <- 0.01
 
 
 #df.plot$padj[df.plot$Change == "NoChange"] <- 1 
-df.plot <- df.plot[df.plot$Change != "NoChange",] 
+df.plot <- df.plot[df.plot$Change != "NoChange",]
 df.plot$Alpha[df.plot$Change == "Up"] <- 0.5 
 df.plot$Alpha[df.plot$Change == "Down"] <- 0.5 
 df.plot$padj <- df.plot$padj + 1e-300   # so if padj == 0 then -log10 will not have value
 # for anno text
-#log2_anno_FC_threshold <- log2(anno_FC_threshold)
-#df.plot$Row.names[df$padj > anno_padj_threshold || abs(df.plot$log2FoldChange) < anno_FC_threshold] <- ""
+log2_anno_FC_threshold <- log2(anno_FC_threshold)
+df.plot$Row.names <- as.character(df.plot$Row.names)
+df.plot$Row.names[df.plot$padj > anno_padj_threshold] <- ""
+df.plot$Row.names[df.plot$log2FoldChange < log2_anno_FC_threshold] <- ""
 
 #df.plot[order(list.Change$log2FoldChange),]
 df.plot <- df.plot[rev(order(df.plot$log2FoldChange)),]
 plotNameVector <- df.plot$Row.names
-plotNameVector[10:length(plotNameVector)] <- ""
+plotNameVector[100:length(plotNameVector)] <- ""
 
 ggplot(df.plot,aes(x=log(df.plot[,1]+1,2),y=log(df.plot[,2]+1,2))) +
         geom_point(aes(alpha=Alpha,color=abs(log2FoldChange),size=-log10(padj))) +

@@ -81,7 +81,7 @@ df.plot$padj <- df.plot$padj + 1e-300   # so if padj == 0 then -log10 will not h
 log2_anno_FC_threshold <- log2(anno_FC_threshold)
 df.plot$anno <- as.character(df.plot$Row.names)
 df.plot$anno[df.plot$padj > anno_padj_threshold] <- ""
-df.plot$anno[df.plot$log2FoldChange < log2_anno_FC_threshold] <- ""
+df.plot$anno[abs(df.plot$log2FoldChange) < log2_anno_FC_threshold] <- ""
 
 #df.plot[order(list.Change$log2FoldChange),]
 df.plot <- df.plot[rev(order(df.plot$log2FoldChange)),]

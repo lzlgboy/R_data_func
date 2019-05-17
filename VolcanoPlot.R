@@ -1,4 +1,4 @@
-function (toptable, lab, x, y, selectLab = NULL, xlim = c(min(toptable[, 
+VolcanoPlot <- function (toptable, lab, x, y, selectLab = NULL, xlim = c(min(toptable[, 
   x], na.rm = TRUE), max(toptable[, x], na.rm = TRUE)), ylim = c(0, 
   max(-log10(toptable[, y]), na.rm = TRUE) + 5), xlab = bquote(~Log[2] ~ 
   "fold change"), ylab = bquote(~-Log[10] ~ italic(P)), axisLabSize = 16, 
@@ -34,11 +34,11 @@ function (toptable, lab, x, y, selectLab = NULL, xlim = c(min(toptable[,
     x]) > FCcutoff)] <- "FC_P"
   toptable$Sig <- factor(toptable$Sig, levels = c("NS", "FC", 
     "P", "FC_P"))
-  if (min(toptable[, y], na.rm = TRUE) == 0) {
-    warning(paste("One or more P values is 0.", "Converting to minimum possible value..."), 
-      call. = FALSE)
-    toptable[which(toptable[, y] == 0), y] <- .Machine$double.xmin
-  }
+  #if (min(toptable[, y], na.rm = TRUE) == 0) {
+  #  warning(paste("One or more P values is 0.", "Converting to minimum possible value..."), 
+  #    call. = FALSE)
+  #  toptable[which(toptable[, y] == 0), y] <- .Machine$double.xmin
+  #}
   toptable$lab <- lab
   toptable$xvals <- toptable[, x]
   # kenian modified to include all data point when zoom In the plot (set small xlim & ylim)
@@ -48,7 +48,7 @@ function (toptable, lab, x, y, selectLab = NULL, xlim = c(min(toptable[,
 
   toptable$yvals <- toptable[, y]
   toptable$yvals[toptable[, y] > max(ylim)] <- max(ylim)
-  toptable$yvals[toptable[, y] < min(ylim)] <- min(ylim)
+  #toptable$yvals[toptable[, y] < min(ylim)] <- min(ylim)
   #========
   if (!is.null(selectLab)) {
     names.new <- rep(NA, length(toptable$lab))

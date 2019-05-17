@@ -34,11 +34,11 @@ VolcanoPlot <- function (toptable, lab, x, y, selectLab = NULL, xlim = c(min(top
     x]) > FCcutoff)] <- "FC_P"
   toptable$Sig <- factor(toptable$Sig, levels = c("NS", "FC", 
     "P", "FC_P"))
-  #if (min(toptable[, y], na.rm = TRUE) == 0) {
-  #  warning(paste("One or more P values is 0.", "Converting to minimum possible value..."), 
-  #    call. = FALSE)
-  #  toptable[which(toptable[, y] == 0), y] <- .Machine$double.xmin
-  #}
+  if (min(toptable[, y], na.rm = TRUE) == 0) {
+    warning(paste("One or more P values is 0.", "Converting to minimum possible value..."), 
+      call. = FALSE)
+    toptable[which(toptable[, y] == 0), y] <- .Machine$double.xmin
+  }
   toptable$lab <- lab
   toptable$xvals <- toptable[, x]
   # kenian modified to include all data point when zoom In the plot (set small xlim & ylim)
@@ -47,13 +47,13 @@ VolcanoPlot <- function (toptable, lab, x, y, selectLab = NULL, xlim = c(min(top
   toptable$xvals[toptable[, x] < min(xlim)] <- min(xlim)
 
   toptable$yvals <- toptable[, y]
-  toptable$yvals[toptable[, y] > max(ylim)] <- max(ylim)
+  toptable$yvals[-log10(toptable[, y]) > max(ylim)] <- 10^(-max(ylim))
   #toptable$yvals[toptable[, y] < min(ylim)] <- min(ylim)
   #========
   if (!is.null(selectLab)) {
     names.new <- rep(NA, length(toptable$lab))
     indices <- which(toptable$lab %in% selectLab)
-    names.new[indices] <- toptable$lab[indices]
+    names.new[indices] <- as.character(toptable$lab[indices])
     toptable$lab <- names.new
   }
   th <- theme_bw(base_size = 24) + theme(legend.background = element_rect(), 

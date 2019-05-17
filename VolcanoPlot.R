@@ -13,6 +13,7 @@ VolcanoPlot <- function (toptable, lab, x, y, selectLab = NULL, xlim = c(min(top
   gridlines.minor = TRUE, border = "partial", borderWidth = 0.8, 
   borderColour = "black") 
 {
+  require(ggplot2)
   if (!requireNamespace("ggplot2")) {
     stop("Please install ggplot2 first.", call. = FALSE)
   }

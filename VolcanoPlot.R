@@ -43,9 +43,13 @@ function (toptable, lab, x, y, selectLab = NULL, xlim = c(min(toptable[,
   toptable$xvals <- toptable[, x]
   # kenian modified to include all data point when zoom In the plot (set small xlim & ylim)
   #========
-  toptable$xvals[(abs(toptable[, x]) > FCcutoff)] <- "FC"
-  #========
+  toptable$xvals[toptable[, x] > max(xlim)] <- max(xlim)
+  toptable$xvals[toptable[, x] < min(xlim)] <- min(xlim)
+
   toptable$yvals <- toptable[, y]
+  toptable$yvals[toptable[, y] > max(ylim)] <- max(ylim)
+  toptable$yvals[toptable[, y] < min(ylim)] <- min(ylim)
+  #========
   if (!is.null(selectLab)) {
     names.new <- rep(NA, length(toptable$lab))
     indices <- which(toptable$lab %in% selectLab)

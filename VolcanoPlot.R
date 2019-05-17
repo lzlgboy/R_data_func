@@ -41,6 +41,10 @@ function (toptable, lab, x, y, selectLab = NULL, xlim = c(min(toptable[,
   }
   toptable$lab <- lab
   toptable$xvals <- toptable[, x]
+  # kenian modified to include all data point when zoom In the plot (set small xlim & ylim)
+  #========
+  toptable$xvals[(abs(toptable[, x]) > FCcutoff)] <- "FC"
+  #========
   toptable$yvals <- toptable[, y]
   if (!is.null(selectLab)) {
     names.new <- rep(NA, length(toptable$lab))

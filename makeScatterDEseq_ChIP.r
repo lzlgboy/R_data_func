@@ -45,6 +45,24 @@ lab.Down <- paste("Down: ",count.Down)
 lab.NoChange <- paste("NoChange: ",count.NoChange)
 #lab.NoChange <- paste("NoChange")
 
+	
+color_DEG <- c("blue", "azure4","red")
+lab_DEG <- c(lab.Down,lab.NoChange,lab.Up)
+	
+if (count.Up == 0) {
+	color_DEG <- c("blue", "azure4")
+	lab_DEG <- c(lab.Down,lab.NoChange)
+}
+
+if (count.Down == 0) {
+	color_DEG <- c("azure4","red")
+	lab_DEG <- c(lab.NoChange,lab.Up)
+}
+
+if (count.Down == 0 & count.Up == 0 ) {
+	color_DEG <- c("azure4")
+	lab_DEG <- c(lab.NoChange)
+}
 
 legend_title <- paste("FC: ",FC_threshold,"\n","Padj: ",padj_threshold,sep="")
 
@@ -53,7 +71,7 @@ ggplot(df.plot,aes(x=log(df.plot[,1]+1,2),y=log(df.plot[,2]+1,2))) +
 	
 	theme_bw() +
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
-    scale_color_manual(values = c("blue", "azure4","red"),labels = c(lab.Down,lab.NoChange,lab.Up)) +
+    scale_color_manual(values = color_DEG,labels = lab_DEG) +
 	labs(colour=legend_title) + 
 
 	xlab(xy_lab[1]) +

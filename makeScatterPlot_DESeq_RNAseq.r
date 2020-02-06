@@ -34,9 +34,9 @@ list.Change   <- list.Change[order(list.Change$log2FoldChange),]
 list.Up   <- list.Up[rev(order(list.Up$log2FoldChange)),]
 list.Down   <- list.Down[order(list.Down$log2FoldChange),]
 	
-fileName.list.Up   <- paste('./',xy_lab[1],'.vs.',xy_lab[2],'.padj.',padj_threshold,'.FC.',FC_threshold,'.Up.order.by.log2FC.txt',sep="")
-fileName.list.Down <- paste('./',xy_lab[1],'.vs.',xy_lab[2],'.padj.',padj_threshold,'.FC.',FC_threshold,'.Down.order.by.log2FC.txt',sep="")
-fileName.list.Change <- paste('./',xy_lab[1],'.vs.',xy_lab[2],'.padj.',padj_threshold,'.FC.',FC_threshold,'.UpDown.order.by.log2FC.txt',sep="")
+fileName.list.Up   <- paste('./',xy_lab[2],'.vs.',xy_lab[1],'.padj.',padj_threshold,'.FC.',FC_threshold,'.Up.order.by.log2FC.txt',sep="")
+fileName.list.Down <- paste('./',xy_lab[2],'.vs.',xy_lab[1],'.padj.',padj_threshold,'.FC.',FC_threshold,'.Down.order.by.log2FC.txt',sep="")
+fileName.list.Change <- paste('./',xy_lab[2],'.vs.',xy_lab[1],'.padj.',padj_threshold,'.FC.',FC_threshold,'.UpDown.order.by.log2FC.txt',sep="")
 
 write.table(list.Up,file=fileName.list.Up,quote=F,row.names=F,col.names=F,sep="\t")
 write.table(list.Down,file=fileName.list.Down,quote=F,row.names=F,col.names=F,sep="\t")

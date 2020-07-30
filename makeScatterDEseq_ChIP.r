@@ -1,11 +1,16 @@
-MakeScatterDESeq <- function(df, x=df$baseMean_x, y = df$baseMean_y, xy_lab= c("X","Y"),flag_logged = FALSE,flag_anno = FALSE, col_anno = c(), FC_threshold = 1.5, padj_threshold=0.05) {
+MakeScatterDESeq <- function(df, x=df$baseMean_x, y = df$baseMean_y, xy_lab= c("X","Y"),flag_logged = FALSE,flag_anno = FALSE, col_anno = c(), FC_threshold = 1.5, padj_threshold=0.05,reCal=FASLE) {
 
 require(ggplot2)
 
 df.plot <- as.data.frame(cbind(as.data.frame(x),as.data.frame(y)))
 
+if (reCal) {
+	df.plot$padj <- 1
+	df$log2FoldChange <- log((df.plot[,2]+0.1)/(df.plot[,1]+0.1),2) # Y/X
+}else{
+	df.plot$padj <- df$padj	
+	}
 
-df.plot$padj <- df$padj
 df.plot$log2FoldChange <- log((df.plot[,2]+0.1)/(df.plot[,1]+0.1),2) # Y/X
 
 fc_log2_threshold <- log(FC_threshold,2)

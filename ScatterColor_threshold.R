@@ -1,4 +1,4 @@
-VolcanoPlot <- function (toptable, lab, x, y, selectLab = NULL, xlim = c(min(toptable[, 
+ScatterColorPlot <- function (toptable, lab, x, y, selectLab = NULL, xlim = c(min(toptable[, 
   x], na.rm = TRUE), max(toptable[, x], na.rm = TRUE)), ylim = c(0, 
   max(-log10(toptable[, y]), na.rm = TRUE) + 5), xlab = bquote(~Log[2] ~ 
   "fold change"), ylab = bquote(~-Log[10] ~ italic(P)), axisLabSize = 16, 
@@ -66,14 +66,14 @@ VolcanoPlot <- function (toptable, lab, x, y, selectLab = NULL, xlim = c(min(top
     legend.key.size = unit(0.5, "cm"), legend.text = element_text(size = legendLabSize), 
     title = element_text(size = legendLabSize), legend.title = element_blank())
   if (!is.null(colOverride)) {
-    plot <- ggplot(toptable, aes(x = xvals, y = -log10(yvals))) + 
+    plot <- ggplot(toptable, aes(x = xvals, y = yvals)) + 
       th + guides(colour = guide_legend(override.aes = list(size = legendIconSize))) + 
       geom_point(aes(color = factor(names(colOverride))), 
         alpha = colAlpha, size = transcriptPointSize) + 
       scale_color_manual(values = colOverride)
   }
   else {
-    plot <- ggplot(toptable, aes(x = xvals, y = -log10(yvals))) + 
+    plot <- ggplot(toptable, aes(x = xvals, y = yvals)) + 
       th + guides(colour = guide_legend(override.aes = list(size = legendIconSize))) + 
       geom_point(aes(color = factor(Sig)), alpha = colAlpha, 
         size = transcriptPointSize) + scale_color_manual(values = c(NS = col[1], 

@@ -48,7 +48,7 @@ ScatterColorPlot <- function (toptable, lab, x, y, selectLab = NULL, xlim = c(mi
   toptable$xvals[toptable[, x] < min(xlim)] <- min(xlim)
 
   toptable$yvals <- toptable[, y]
-  toptable$yvals[-log10(toptable[, y]) > max(ylim)] <- 10^(-max(ylim))
+  #toptable$yvals[-log10(toptable[, y]) > max(ylim)] <- 10^(-max(ylim))
   #toptable$yvals[toptable[, y] < min(ylim)] <- min(ylim)
   #========
   if (!is.null(selectLab)) {
@@ -84,7 +84,7 @@ ScatterColorPlot <- function (toptable, lab, x, y, selectLab = NULL, xlim = c(mi
   plot <- plot + xlab(xlab) + ylab(ylab) + xlim(xlim[1], xlim[2]) + 
     ylim(ylim[1], ylim[2]) + ggtitle(title) + geom_vline(xintercept = c(-FCcutoff, 
     FCcutoff), linetype = cutoffLineType, colour = cutoffLineCol, 
-    size = cutoffLineWidth) + geom_hline(yintercept = -log10(pCutoff), 
+    size = cutoffLineWidth) + geom_hline(yintercept = pCutoff, 
     linetype = cutoffLineType, colour = cutoffLineCol, size = cutoffLineWidth)
   if (border == "full") {
     plot <- plot + theme(panel.border = element_rect(colour = borderColour, 

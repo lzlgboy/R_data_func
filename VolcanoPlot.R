@@ -31,10 +31,10 @@ VolcanoPlot <- function (toptable, lab, x, y, selectLab = NULL, xlim = c(min(top
   toptable$Sig <- "NS"
   toptable$Sig[(abs(toptable[, x]) > FCcutoff)] <- "FC"
   toptable$Sig[(toptable[, y] < pCutoff)] <- "P"
-  toptable$Sig[(toptable[, y] < pCutoff) & (abs(toptable[, 
-    x]) > FCcutoff)] <- "FC_P"
+  toptable$Sig[(toptable[, y] < pCutoff) & (toptable[, x] > FCcutoff)] <- "FC_P_Up"
+  toptable$Sig[(toptable[, y] < pCutoff) & (toptable[, x] < -FCcutoff)] <- "FC_P_Down"
   toptable$Sig <- factor(toptable$Sig, levels = c("NS", "FC", 
-    "P", "FC_P"))
+    "P", "FC_P_Up","FC_P_Down"))
   if (min(toptable[, y], na.rm = TRUE) == 0) {
     warning(paste("One or more P values is 0.", "Converting to minimum possible value..."), 
       call. = FALSE)
@@ -77,7 +77,7 @@ VolcanoPlot <- function (toptable, lab, x, y, selectLab = NULL, xlim = c(min(top
       th + guides(colour = guide_legend(override.aes = list(size = legendIconSize))) + 
       geom_point(aes(color = factor(Sig)), alpha = colAlpha, 
         size = transcriptPointSize) + scale_color_manual(values = c(NS = col[1], 
-      FC = col[2], P = col[3], FC_P = col[4]), labels = c(NS = legend[1], 
+      FC = col[2], P = col[3], FC_P_Up = col[4], FC_P_Down = col[5]), labels = c(NS = legend[1], 
       FC = paste(legend[2], sep = ""), P = paste(legend[3], 
         sep = ""), FC_P = paste(legend[4], sep = "")))
   }

@@ -1,6 +1,6 @@
 ScatterColorPlot <- function (toptable, lab, x, y, selectLab = NULL, xlim = c(min(toptable[, 
-  x], na.rm = TRUE), max(toptable[, x], na.rm = TRUE)), ylim = c(0, 
-  max(-log10(toptable[, y]), na.rm = TRUE) + 5), xlab = bquote(~Log[2] ~ 
+  x], na.rm = TRUE), max(toptable[, x], na.rm = TRUE)), ylim = c(min(toptable[, 
+  y], na.rm = TRUE), max(toptable[, y], na.rm = TRUE)), xlab = bquote(~Log[2] ~ 
   "fold change"), ylab = bquote(~-Log[10] ~ italic(P)), axisLabSize = 16, 
   pCutoff = 0.05, pLabellingCutoff = pCutoff, FCcutoff = 2, 
   title = "", titleLabSize = 16, transcriptPointSize = 0.8, 

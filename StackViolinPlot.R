@@ -13,6 +13,7 @@ modify_vlnplot<- function(obj,
   p<- VlnPlot(obj, features = feature, pt.size = pt.size, ... )  + 
     xlab("") + ylab(feature) + ggtitle("") + 
     theme(legend.position = "none", 
+          plot.title = element_blank(), 
           axis.text.x = element_blank(), 
           axis.ticks.x = element_blank(), 
           axis.title.y = element_text(size = rel(1), angle = 0), 

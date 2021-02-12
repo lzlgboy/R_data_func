@@ -27,5 +27,5 @@ Split_HumanMouse_10X_Count <- function( RawCount ,pct_threshold = 0.05) {
 
     returnList <- list("HumanCount" = Human_Count, "MouseCount" = Mouse_Count, "plot"=plt)
     
-    return returnList
+    return(returnList)
 }

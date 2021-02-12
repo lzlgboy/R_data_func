@@ -3,6 +3,7 @@
 Split_HumanMouse_10X_Count <- function( RawCount ,pct_threshold = 0.05) {
     require(Matrix)
     require(ggplot2)
+    
 
     df_human <- as.data.frame(Matrix::colSums(RawCount[grep("^GRCh38_",  rownames(RawCount)),]))
     df_mouse <- as.data.frame(Matrix::colSums(RawCount[grep("^mm10__",  rownames(RawCount)),]))

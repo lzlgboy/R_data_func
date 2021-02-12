@@ -33,7 +33,7 @@ Split_HumanMouse_10X_Count <- function( RawCount ,pct_threshold = 0.05) {
     numHumanCell <- length(Human_Count[1,])
     numDoublet   <- length(df$Human) - numMouseCell - numHumanCell
 
-    returnList <- list("HumanCount" = Human_Count, "MouseCount" = Mouse_Count, "plot"=plt,"NumDoublet"=,"NumMouseCell"=numMouseCell,"NumHumanCell"=numHumanCell)
+    returnList <- list("HumanCount" = Human_Count, "MouseCount" = Mouse_Count, "plot"=plt,"NumDoublet"=numDoublet,"NumMouseCell"=numMouseCell,"NumHumanCell"=numHumanCell)
     
     return(returnList)
 }

@@ -25,8 +25,15 @@ Split_HumanMouse_10X_Count <- function( RawCount ,pct_threshold = 0.05) {
     
     Human_Count <- RawCount[grep("^GRCh38_",  rownames(RawCount)),which( df$Mouse/(df$Mouse+df$Human) < pct_threshold)]
     Mouse_Count <- RawCount[grep("^mm10__",  rownames(RawCount)),which( df$Human/(df$Mouse+df$Human) < pct_threshold)]
+    
+    rownames(Mouse_Count) <- gsub("mm10___","",rownames(Mouse_Count))
+    rownames(Human_Count) <- gsub("GRCh38_","",rownames(Human_Count))
+    
+    numMouseCell <- length(Mouse_Count[1,])
+    numHumanCell <- length(Human_Count[1,])
+    numDoublet   <- length(df$Human) - numMouseCell - numHumanCell
 
-    returnList <- list("HumanCount" = Human_Count, "MouseCount" = Mouse_Count, "plot"=plt)
+    returnList <- list("HumanCount" = Human_Count, "MouseCount" = Mouse_Count, "plot"=plt,"NumDoublet"=,"NumMouseCell"=numMouseCell,"NumHumanCell"=numHumanCell)
     
     return(returnList)
 }

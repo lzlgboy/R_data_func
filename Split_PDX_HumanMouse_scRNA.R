@@ -23,6 +23,15 @@ Split_HumanMouse_10X_Count <- function( RawCount ,pct_threshold = 0.05) {
             xlim(c(0,max(df$Human)+5)) +
             ylim(c(0,max(df$Mouse)+5))
     
+    plt_hist <- ggplot(df,aes(x=Mouse/(Mouse+Human))) + geom_histogram(breaks=seq(0,1,0.0005)) + 
+                                        geom_vline(xintercept = pct_threshold,lty=2,col='red') + 
+                                        geom_vline(xintercept = (1-pct_threshold),lty=2,col='red') + 
+                                        xlab("Fraction of reads from mouse") + 
+                                        ylab("Cell Count") +
+                                        theme_classic() +
+                                        theme(axis.text=element_text(size=16),
+                                              axis.title=element_text(size=14,face="bold"))
+    
     Human_Count <- RawCount[grep("^GRCh38_",  rownames(RawCount)),which( df$Mouse/(df$Mouse+df$Human) < pct_threshold)]
     Mouse_Count <- RawCount[grep("^mm10__",  rownames(RawCount)),which( df$Human/(df$Mouse+df$Human) < pct_threshold)]
     

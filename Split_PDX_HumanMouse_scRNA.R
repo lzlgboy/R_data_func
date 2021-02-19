@@ -12,7 +12,7 @@ Split_HumanMouse_10X_Count <- function( RawCount ,pct_threshold = 0.05) {
     colnames(df) <- c('Human','Mouse')
     
     # For ggplot split species scatter plot 
-    df$Species <- 'Doublet'
+    df$Species <- 'Mixed'
     df[which( df$Human/(df$Mouse+df$Human) < pct_threshold ),]$Species <- 'Mouse'
     df[which( df$Mouse/(df$Mouse+df$Human) < pct_threshold ),]$Species <- 'Human'
     

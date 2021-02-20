@@ -18,7 +18,7 @@ Split_HumanMouse_10X_Count <- function( RawCount ,pct_threshold = 0.05) {
     
     plt <- ggplot(df,aes(x=Human,y=Mouse)) + 
             geom_point(aes(color=Species),size=0.5) +
-            scale_color_manual(values=c("grey", "red", "blue")) +
+            scale_color_manual(values=c("red", "grey", "blue")) +
             theme_bw() + 
             xlim(c(0,max(df$Human)+5)) +
             ylim(c(0,max(df$Mouse)+5))

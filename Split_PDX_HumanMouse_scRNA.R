@@ -80,7 +80,7 @@ Split_HumanMouse_10X_Count <- function( RawCount ,pct_threshold = 0.05) {
     doublet_rate_By10X = numDoublet_By10X / (numMouseCell_By10X + numHumanCell_By10X + numDoublet_By10X)
     
 
-    returnList <- list("HumanCountBy10X" = Human_Count_by10X, "MouseCountBy10X" = Mouse_Count_by10X,"HumanCountByPct" = Human_Count_byPct, "MouseCountByPct" = Mouse_Count_byPct, "doubletRateBy10X"=doublet_rate_By10X,"doubletRateByPct"=doublet_rate_ByPct,"plot"=plt, "plot_hist"=plt_ratio_hist,"NumDoubletByPct"=numDoublet_ByPct,"NumMouseCellByPct"=numMouseCell_ByPct,"NumHumanCellByPct"=numHumanCell_ByPct,"NumDoubletBy10X"=numDoublet_By10X,"NumMouseCellBy10X"=numMouseCell_By10X,"NumHumanCellBy10X"=numHumanCell_By10X)
+    returnList <- list("HumanCountBy10X" = Human_Count_by10X, "MouseCountBy10X" = Mouse_Count_by10X,"HumanCountByPct" = Human_Count_byPct, "MouseCountByPct" = Mouse_Count_byPct, "doubletRateBy10X"=doublet_rate_By10X,"doubletRateByPct"=doublet_rate_ByPct,"pltScatterByPct"=plt_scatter_by_Percent ,"pltScatterBy10X"=plt_scatter_by_10X , "plot_hist"=plt_ratio_hist,"NumDoubletByPct"=numDoublet_ByPct,"NumMouseCellByPct"=numMouseCell_ByPct,"NumHumanCellByPct"=numHumanCell_ByPct,"NumDoubletBy10X"=numDoublet_By10X,"NumMouseCellBy10X"=numMouseCell_By10X,"NumHumanCellBy10X"=numHumanCell_By10X)
     
     return(returnList)
 }

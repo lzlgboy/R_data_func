@@ -20,8 +20,8 @@ Split_HumanMouse_10X_Count <- function( RawCount ,pct_threshold = 0.05) {
     df$Species_By10x <- "Mouse"
     df$Species_By10x[which(df$Human > df$Mouse)] <- 'Human'
     
-    qt_10th_mouse <- quantile(df$Human[which(df$Species_By10x == 'Mouse')],0.1)
-    qt_10th_human <- quantile(df$Mouse[which(df$Species_By10x == 'Human')],0.1)
+    qt_10th_mouse <- quantile(df$Mouse[which(df$Species_By10x == 'Mouse')],0.1)
+    qt_10th_human <- quantile(df$Human[which(df$Species_By10x == 'Human')],0.1)
     
     df$Species_By10x[which(df$Human >= qt_10th_human & df$Mouse >= qt_10th_mouse)] <- 'Mixed'
     # ======

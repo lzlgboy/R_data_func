@@ -1,4 +1,4 @@
-LRPlotV2 <- function(res) {
+LRPlotV2 <- function(res,track.height_1=uh(2,"mm"),track.height_2 = uh(12, "mm"),annotation.height_1 = 0.01,annotation.height_2 = 0.01,text.vjust = "0.4cm" ) {
 #When you've got your object "res", just run my codes and you'll get the plot
 ###first, set the parameter
     require(circlize)

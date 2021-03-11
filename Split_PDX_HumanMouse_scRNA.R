@@ -104,32 +104,32 @@ Split_HumanMouse_10X_Count <- function( RawCount ,pct_threshold = 0.05) {
     numDoublet   <- length(df$Human) - numMouseCell - numHumanCell
     doublet_rate = numDoublet / (numMouseCell + numHumanCell + numDoublet)
     
-    returnList <- list("HumanCountBy10X" = Human_Count_by10X, + 
-                       "MouseCountBy10X" = Mouse_Count_by10X, +
-                       "HumanCountByPct" = Human_Count_byPct, + 
-                       "MouseCountByPct" = Mouse_Count_byPct, +
-                       "HumanCount" = Human_Count, + 
-                       "MouseCount" = Mouse_Count, + 
+    returnList <- list("HumanCountBy10X" = Human_Count_by10X,  
+                       "MouseCountBy10X" = Mouse_Count_by10X, 
+                       "HumanCountByPct" = Human_Count_byPct,  
+                       "MouseCountByPct" = Mouse_Count_byPct, 
+                       "HumanCount" = Human_Count,  
+                       "MouseCount" = Mouse_Count,  
                        
-                       "doubletRateBy10X"=doublet_rate_By10X, +
-                       "doubletRateByPct"=doublet_rate_ByPct, +
-                       "doubletRate"=doublet_rate, +             
+                       "doubletRateBy10X"=doublet_rate_By10X, 
+                       "doubletRateByPct"=doublet_rate_ByPct, 
+                       "doubletRate"=doublet_rate,              
                        
-                       "pltScatterByPct"=plt_scatter_by_Percent ,+
-                       "pltScatterBy10X"=plt_scatter_by_10X , +
-                       "pltScatterByBoth"=plt_scatter_by_Both , +
+                       "pltScatterByPct"=plt_scatter_by_Percent ,
+                       "pltScatterBy10X"=plt_scatter_by_10X , 
+                       "pltScatterByBoth"=plt_scatter_by_Both , 
                        
                        
-                       "plot_hist"=plt_ratio_hist, +
+                       "plot_hist"=plt_ratio_hist, 
                        
-                       "NumDoubletByPct"=numDoublet_ByPct, +
-                       "NumMouseCellByPct"=numMouseCell_ByPct, + 
-                       "NumHumanCellByPct"=numHumanCell_ByPct, + 
-                       "NumDoublet"=numDoublet, +
-                       "NumMouseCell"=numMouseCell, + 
-                       "NumHumanCell"=numHumanCell, +                        
-                       "NumDoubletBy10X"=numDoublet_By10X, +
-                       "NumMouseCellBy10X"=numMouseCell_By10X, +
+                       "NumDoubletByPct"=numDoublet_ByPct, 
+                       "NumMouseCellByPct"=numMouseCell_ByPct,  
+                       "NumHumanCellByPct"=numHumanCell_ByPct,  
+                       "NumDoublet"=numDoublet, 
+                       "NumMouseCell"=numMouseCell, 
+                       "NumHumanCell"=numHumanCell,                         
+                       "NumDoubletBy10X"=numDoublet_By10X, 
+                       "NumMouseCellBy10X"=numMouseCell_By10X, 
                        "NumHumanCellBy10X"=numHumanCell_By10X)
     
     return(returnList)

@@ -26,14 +26,17 @@ Split_HumanMouse_10X_Count <- function( RawCount ,pct_threshold = 0.05) {
     df$Species_By10x[which(df$Human >= qt_10th_human & df$Mouse >= qt_10th_mouse)] <- 'Mixed'
     # ======
     
-    # Using Both algorithm
+    # Further flag HumanCells that contain > 5% Mouse reads & MouseCells that contain > 5% Human reads
     # ======
-    # df$Species
+    df$Species <- df$Species_By10x
+    df$Species[which(df$Species_By10x != 'Mixed' & df$Species_ByPct == 'Mixed')] <- 'Mixed'
+    #=======
     
     plt_scatter_by_Percent <- ggplot(df,aes(x=Human,y=Mouse)) + 
             geom_point(aes(color=Species_ByPct),size=0.5) +
             scale_color_manual(values=c("red", "grey", "blue")) +
             theme_bw() + 
+            guides(fill=guide_legend(title="Species")) + 
             xlim(c(0,max(df$Human)+5)) +
             ylim(c(0,max(df$Mouse)+5))
     
@@ -41,6 +44,15 @@ Split_HumanMouse_10X_Count <- function( RawCount ,pct_threshold = 0.05) {
             geom_point(aes(color=Species_By10x),size=0.5) +
             scale_color_manual(values=c("red", "grey", "blue")) +
             theme_bw() + 
+            guides(fill=guide_legend(title="Species")) + 
+            xlim(c(0,max(df$Human)+5)) +
+            ylim(c(0,max(df$Mouse)+5))
+    
+    plt_scatter_by_Both <- ggplot(df,aes(x=Human,y=Mouse)) + 
+            geom_point(aes(color=Species),size=0.5) +
+            scale_color_manual(values=c("red", "grey", "blue")) +
+            theme_bw() + 
+            guides(fill=guide_legend(title="Species")) + 
             xlim(c(0,max(df$Human)+5)) +
             ylim(c(0,max(df$Mouse)+5))
     
@@ -53,12 +65,16 @@ Split_HumanMouse_10X_Count <- function( RawCount ,pct_threshold = 0.05) {
                                         theme(axis.text=element_text(size=16),
                                               axis.title=element_text(size=14,face="bold"))
     # Count by Pct
-    Human_Count_byPct <- RawCount[grep("^GRCh38_",  rownames(RawCount)),which( df$Mouse/(df$Mouse+df$Human) < pct_threshold)]
-    Mouse_Count_byPct <- RawCount[grep("^mm10__",  rownames(RawCount)),which( df$Human/(df$Mouse+df$Human) < pct_threshold)]
+    Human_Count_byPct <- RawCount[grep("^GRCh38_",  rownames(RawCount)),which( df$Species_ByPct == 'Human')]
+    Mouse_Count_byPct <- RawCount[grep("^mm10__",  rownames(RawCount)),which( df$Species_ByPct == 'Mouse')]
 
     # Count by10X
     Human_Count_by10X <- RawCount[grep("^GRCh38_",  rownames(RawCount)),which(df$Species_By10x == 'Human')]
     Mouse_Count_by10X <- RawCount[grep("^mm10__",  rownames(RawCount)),which(df$Species_By10x == 'Mouse')]
+    
+    # Count by Both
+    Human_Count <- RawCount[grep("^GRCh38_",  rownames(RawCount)),which(df$Species == 'Human')]
+    Mouse_Count <- RawCount[grep("^mm10__",  rownames(RawCount)),which(df$Species == 'Mouse')]
     
     # add rownames
     rownames(Mouse_Count_byPct) <- gsub("mm10___","",rownames(Mouse_Count_byPct))
@@ -66,6 +82,9 @@ Split_HumanMouse_10X_Count <- function( RawCount ,pct_threshold = 0.05) {
     
     rownames(Mouse_Count_by10X) <- gsub("mm10___","",rownames(Mouse_Count_by10X))
     rownames(Human_Count_by10X) <- gsub("GRCh38_","",rownames(Human_Count_by10X))
+    
+    rownames(Mouse_Count) <- gsub("mm10___","",rownames(Mouse_Count))
+    rownames(Human_Count) <- gsub("GRCh38_","",rownames(Human_Count))
     
     # Doublet Rate By Percent
     numMouseCell_ByPct <- length(Mouse_Count_byPct[1,])
@@ -79,8 +98,39 @@ Split_HumanMouse_10X_Count <- function( RawCount ,pct_threshold = 0.05) {
     numDoublet_By10X   <- length(df$Human) - numMouseCell_By10X - numHumanCell_By10X
     doublet_rate_By10X = numDoublet_By10X / (numMouseCell_By10X + numHumanCell_By10X + numDoublet_By10X)
     
-
-    returnList <- list("HumanCountBy10X" = Human_Count_by10X, "MouseCountBy10X" = Mouse_Count_by10X,"HumanCountByPct" = Human_Count_byPct, "MouseCountByPct" = Mouse_Count_byPct, "doubletRateBy10X"=doublet_rate_By10X,"doubletRateByPct"=doublet_rate_ByPct,"pltScatterByPct"=plt_scatter_by_Percent ,"pltScatterBy10X"=plt_scatter_by_10X , "plot_hist"=plt_ratio_hist,"NumDoubletByPct"=numDoublet_ByPct,"NumMouseCellByPct"=numMouseCell_ByPct,"NumHumanCellByPct"=numHumanCell_ByPct,"NumDoubletBy10X"=numDoublet_By10X,"NumMouseCellBy10X"=numMouseCell_By10X,"NumHumanCellBy10X"=numHumanCell_By10X)
+    # Doublet Rate
+    numMouseCell <- length(Mouse_Count[1,])
+    numHumanCell <- length(Human_Count[1,])
+    numDoublet   <- length(df$Human) - numMouseCell - numHumanCell
+    doublet_rate = numDoublet / (numMouseCell + numHumanCell + numDoublet)
+    
+    returnList <- list("HumanCountBy10X" = Human_Count_by10X, + 
+                       "MouseCountBy10X" = Mouse_Count_by10X, +
+                       "HumanCountByPct" = Human_Count_byPct, + 
+                       "MouseCountByPct" = Mouse_Count_byPct, +
+                       "HumanCount" = Human_Count, + 
+                       "MouseCount" = Mouse_Count, + 
+                       
+                       "doubletRateBy10X"=doublet_rate_By10X, +
+                       "doubletRateByPct"=doublet_rate_ByPct, +
+                       "doubletRate"=doublet_rate, +             
+                       
+                       "pltScatterByPct"=plt_scatter_by_Percent ,+
+                       "pltScatterBy10X"=plt_scatter_by_10X , +
+                       "pltScatterByBoth"=plt_scatter_by_Both , +
+                       
+                       
+                       "plot_hist"=plt_ratio_hist, +
+                       
+                       "NumDoubletByPct"=numDoublet_ByPct, +
+                       "NumMouseCellByPct"=numMouseCell_ByPct, + 
+                       "NumHumanCellByPct"=numHumanCell_ByPct, + 
+                       "NumDoublet"=numDoublet, +
+                       "NumMouseCell"=numMouseCell, + 
+                       "NumHumanCell"=numHumanCell, +                        
+                       "NumDoubletBy10X"=numDoublet_By10X, +
+                       "NumMouseCellBy10X"=numMouseCell_By10X, +
+                       "NumHumanCellBy10X"=numHumanCell_By10X)
     
     return(returnList)
 }

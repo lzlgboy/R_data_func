@@ -1,4 +1,4 @@
-LRPlotV2 <- function(res,track.height_1=uh(2,"mm"),track.height_2 = uh(12, "mm"),annotation.height_1 = 0.01,annotation.height_2 = 0.01,text.vjust = "0.4cm" ) {
+LRPlotV2 <- function(res,track.height_1=uh(2,"mm"),track.height_2 = uh(12, "mm"),annotation.height_1 = 0.01,annotation.height_2 = 0.01,text.vjust = "0.4cm",ft_size_gene = 0.7,ft_size_cell=1 ) {
 #When you've got your object "res", just run my codes and you'll get the plot
 ###first, set the parameter
     require(circlize)
@@ -61,14 +61,13 @@ LRPlotV2 <- function(res,track.height_1=uh(2,"mm"),track.height_2 = uh(12, "mm")
       if (datatype == "mean count") {
         data <- data %>% mutate(link_col = "black")
       }else if (datatype == "DEG") {
-        data <- data %>% mutate(link_col = ifelse(cell_from_logFC == 
-                                                    1e-04, ifelse(cell_to_logFC > 0, "#d73027", 
-                                                                  "#00ccff"), ifelse(cell_to_logFC == 1e-04, 
-                                                                                     ifelse(cell_from_logFC > 0, "#d73027", 
-                                                                                            "#00ccff"), ifelse(cell_from_logFC > 
-                                                                                                                 0, ifelse(cell_to_logFC > 0, "#d73027", 
-                                                                                                                           "#dfc27d"), ifelse(cell_to_logFC > 0, 
-                                                                                                                                              "#9933ff", "#00ccff")))))
+        data <- data %>% mutate(link_col = ifelse(cell_from_logFC == 1e-04, 
+                                                  ifelse(cell_to_logFC > 0, "#d73027","#00ccff"), 
+                                           ifelse(cell_to_logFC == 1e-04, 
+                                                 ifelse(cell_from_logFC > 0, "#d73027","#00ccff"), 
+                                                 ifelse(cell_from_logFC > 0, 
+                                                 ifelse(cell_to_logFC > 0, "#d73027", "#dfc27d"), 
+                                                 ifelse(cell_to_logFC > 0, "#9933ff", "#00ccff")))))
       }else {
         print("invalid datatype")
       }
@@ -165,7 +164,7 @@ LRPlotV2 <- function(res,track.height_1=uh(2,"mm"),track.height_2 = uh(12, "mm")
       ylim = get.cell.meta.data("ylim")
       sector.index = genes[get.cell.meta.data("sector.numeric.index")]
       circos.text(mean(xlim), mean(ylim), sector.index, col = "black", 
-                  cex = 0.7, facing = facing, niceFacing = TRUE)
+                  cex = ft_size_gene, facing = facing, niceFacing = TRUE)
     }, bg.border = 0)
 
 
@@ -175,7 +174,7 @@ LRPlotV2 <- function(res,track.height_1=uh(2,"mm"),track.height_2 = uh(12, "mm")
       genes_matrix_2 = genes_matrix[which(genes_matrix$names==c),]
       highlight.sector(sector.index = genes_matrix_2$genes_2, track.index = 1, 
                        col = ifelse(length(cell_col) == 1, cell_col, 
-                                    cell_col[c]), text = genes_matrix_2$cell, text.vjust = text.vjust, 
+                                    cell_col[c]), text = genes_matrix_2$cell, text.vjust = text.vjust,cex=ft_size_cell, 
                        niceFacing = TRUE, lwd = 1)
     }
 }

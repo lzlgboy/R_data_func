@@ -39,7 +39,7 @@ StackedVlnPlot<- function(obj, features,
   plot_list<- purrr::map(features, function(x) modify_vlnplot(obj = obj,feature = x, ...))
   
   # Add back x-axis title to bottom plot. patchwork is going to support this?
-  if (rotate_x <> 0) {
+  if (rotate_x != 0) {
         plot_list[[length(plot_list)]]<- plot_list[[length(plot_list)]] +
         theme(axis.text.x=element_text(angle = rotate_x), axis.ticks.x = element_line())
     }else{

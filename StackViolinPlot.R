@@ -7,7 +7,8 @@ library(ggplot2)
 ## ... pass any arguments to VlnPlot in Seurat
 modify_vlnplot<- function(obj, 
                           feature, 
-                          pt.size = 0, 
+                          pt.size = 0,
+                          rotate_x = 90,  # Angle to rotate for X axis text.
                           plot.margin = unit(c(-0.75, 0, -0.75, 0), "cm"),
                           ...) {
   p<- VlnPlot(obj, features = feature, pt.size = pt.size, ... )  + 
@@ -38,8 +39,14 @@ StackedVlnPlot<- function(obj, features,
   plot_list<- purrr::map(features, function(x) modify_vlnplot(obj = obj,feature = x, ...))
   
   # Add back x-axis title to bottom plot. patchwork is going to support this?
-  plot_list[[length(plot_list)]]<- plot_list[[length(plot_list)]] +
-    theme(axis.text.x=element_text(), axis.ticks.x = element_line())
+  if (rotate_x <> 0) {
+        plot_list[[length(plot_list)]]<- plot_list[[length(plot_list)]] +
+        theme(axis.text.x=element_text(angle = rotate_x), axis.ticks.x = element_line())
+    }else{
+      plot_list[[length(plot_list)]]<- plot_list[[length(plot_list)]] +
+      theme(axis.text.x=element_text(), axis.ticks.x = element_line())
+    }
+
   
   # change the y-axis tick to only max value 
   ymaxs<- purrr::map_dbl(plot_list, extract_max)

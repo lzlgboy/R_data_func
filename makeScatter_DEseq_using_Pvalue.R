@@ -65,7 +65,7 @@ if (count.Down == 0 & count.Up == 0 ) {
 	lab_DEG <- c(lab.NoChange)
 }
 
-legend_title <- paste("FC: ",FC_threshold,"\n","Pval: ",padj_threshold,sep="")
+legend_title <- paste("FC: ",FC_threshold,"\n","Pval: ",pval_threshold,sep="")
 
 ggplot(df.plot,aes(x=log(df.plot[,1]+1,2),y=log(df.plot[,2]+1,2))) +
     geom_point(aes(color=Change),size=0.5) +

@@ -69,7 +69,7 @@ VolcanoPlot <- function (toptable, lab, x, y, pCutUse, auto_Title = TRUE,selectL
     toptable$lab <- names.new
   }
   if (auto_Title) {
-      title = paste('logFC',">",FCcutoff,' ',pCutUse,"<",pCutoff)
+      title = paste(title,"    ",'logFC',">",FCcutoff,' ',pCutUse,"<",pCutoff)
   }
   th <- theme_bw(base_size = 24) + theme(legend.background = element_rect(), 
     plot.title = element_text(angle = 0, size = titleLabSize, 
@@ -157,5 +157,14 @@ VolcanoPlot <- function (toptable, lab, x, y, pCutUse, auto_Title = TRUE,selectL
         abs(toptable[, x]) > FCcutoff)[, "lab"]), size = transcriptLabSize, 
       check_overlap = TRUE, vjust = 1.5)
   }
-  return(plot)
+  table_FC_P_Up   <- toptable[which(toptable$Sig == 'FC_P_Up'),]
+  table_FC_P_Down <- toptable[which(toptable$Sig == 'FC_P_Down'),] 
+  table_FC_P_UpDown <- toptable[which(toptable$Sig == 'FC_P_Up' | toptable$Sig == 'FC_P_Down'),]
+    
+  newList <- list("plot_volcano" = plot, 
+                  "table_FC_P_Up" = table_FC_P_Up,
+                  "table_FC_P_Down" = table_FC_P_Down,
+                  "table_FC_P_UpDown" = table_FC_P_UpDown
+                 )  
+  return(newList)
 }

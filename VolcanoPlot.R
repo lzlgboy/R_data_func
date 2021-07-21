@@ -1,4 +1,4 @@
-VolcanoPlot <- function (toptable, lab, x, y, selectLab = NULL, xlim = c(min(toptable[, 
+VolcanoPlot <- function (toptable, lab, x, y, pCutUse, auto_Title = TRUE,selectLab = NULL, xlim = c(min(toptable[, 
   x], na.rm = TRUE)-0.1, max(toptable[, x], na.rm = TRUE)+0.1), ylim = c(-0.1, 
   max(-log10(toptable[, y]), na.rm = TRUE) + 0.1), xlab = bquote(~Log[2] ~ 
   "fold change"), ylab = bquote(~-Log[10] ~ italic(P)), axisLabSize = 16, 
@@ -6,7 +6,7 @@ VolcanoPlot <- function (toptable, lab, x, y, selectLab = NULL, xlim = c(min(top
   title = "", titleLabSize = 16, transcriptPointSize = 0.8, 
   transcriptLabSize = 3, col = c("black", "black", 
     "black", "red2","blue2"), colOverride = NULL, colAlpha = 1/2, 
-  legend = c("NS", "Log2 FC", "P", "P & Log2 FC"), legendPosition = "top", 
+  legend = c("NS", "FC", "P", "FC_P_UP","FC_P_DOWN"), legendPosition = "top", 
   legendLabSize = 10, legendIconSize = 3, DrawConnectors = FALSE, 
   widthConnectors = 0.5, colConnectors = "black", cutoffLineType = "longdash", 
   cutoffLineCol = "black", cutoffLineWidth = 0.4, gridlines.major = TRUE, 
@@ -26,15 +26,26 @@ VolcanoPlot <- function (toptable, lab, x, y, selectLab = NULL, xlim = c(min(top
   if (!is.numeric(toptable[, y])) {
     stop(paste(y, " is not numeric!", sep = ""))
   }
+  if (!is.numeric(toptable[, pCutUse])) {
+    stop(paste(pCutUse, " is not numeric!", sep = ""))
+  }
   i <- xvals <- yvals <- Sig <- NULL
   toptable <- as.data.frame(toptable)
   toptable$Sig <- "NS"
   toptable$Sig[(abs(toptable[, x]) > FCcutoff)] <- "FC"
-  toptable$Sig[(toptable[, y] < pCutoff)] <- "P"
-  toptable$Sig[(toptable[, y] < pCutoff) & (toptable[, x] > FCcutoff)] <- "FC_P_Up"
-  toptable$Sig[(toptable[, y] < pCutoff) & (toptable[, x] < -FCcutoff)] <- "FC_P_Down"
+  toptable$Sig[(toptable[, pCutUse] < pCutoff)] <- "P"
+  toptable$Sig[(toptable[, pCutUse] < pCutoff) & (toptable[, x] > FCcutoff)] <- "FC_P_Up"
+  toptable$Sig[(toptable[, pCutUse] < pCutoff) & (toptable[, x] < -FCcutoff)] <- "FC_P_Down"
   toptable$Sig <- factor(toptable$Sig, levels = c("NS", "FC", 
     "P", "FC_P_Up","FC_P_Down"))
+  
+    
+  num_NS   <- length(which(toptable$Sig == 'NS'))
+  num_FC   <- length(which(toptable$Sig == 'FC'))
+  num_P   <- length(which(toptable$Sig == 'P'))  
+  num_FC_P_Up   <- length(which(toptable$Sig == 'FC_P_Up'))
+  num_FC_P_Down <- length(which(toptable$Sig == 'FC_P_Down')) 
+    
   if (min(toptable[, y], na.rm = TRUE) == 0) {
     warning(paste("One or more P values is 0.", "Converting to minimum possible value..."), 
       call. = FALSE)
@@ -57,6 +68,9 @@ VolcanoPlot <- function (toptable, lab, x, y, selectLab = NULL, xlim = c(min(top
     names.new[indices] <- as.character(toptable$lab[indices])
     toptable$lab <- names.new
   }
+  if (auto_Title) {
+      title = paste('logFC',">",FCcutoff,' ',pCutUse,"<",pCutoff)
+  }
   th <- theme_bw(base_size = 24) + theme(legend.background = element_rect(), 
     plot.title = element_text(angle = 0, size = titleLabSize, 
       face = "bold", vjust = 1), axis.text.x = element_text(angle = 0, 
@@ -76,10 +90,14 @@ VolcanoPlot <- function (toptable, lab, x, y, selectLab = NULL, xlim = c(min(top
     plot <- ggplot(toptable, aes(x = xvals, y = -log10(yvals))) + 
       th + guides(colour = guide_legend(override.aes = list(size = legendIconSize))) + 
       geom_point(aes(color = factor(Sig)), alpha = colAlpha, 
-        size = transcriptPointSize) + scale_color_manual(values = c(NS = col[1], 
-      FC = col[2], P = col[3], FC_P_Up = col[4], FC_P_Down = col[5]), labels = c(NS = legend[1], 
-      FC = paste(legend[2], sep = ""), P = paste(legend[3], 
-        sep = ""), FC_P = paste(legend[4], sep = "")))
+        size = transcriptPointSize) + 
+      scale_color_manual(values = c(NS = col[1], 
+      FC = col[2], P = col[3], FC_P_Up = col[4], FC_P_Down = col[5]), 
+      labels = c(NS = paste(legend[1],"\nN=",num_NS), 
+                 FC = paste(legend[2], "\nN=",num_FC), 
+                 P = paste(legend[3], "\nN=",num_P), 
+                 FC_P_Up = paste(legend[4],"\nN=",num_FC_P_Up), 
+                 FC_P_Down = paste(legend[5],"\nN=",num_FC_P_Down)))
   }
   plot <- plot + xlab(xlab) + ylab(ylab) + xlim(xlim[1], xlim[2]) + 
     ylim(ylim[1], ylim[2]) + ggtitle(title) + geom_vline(xintercept = c(-FCcutoff, 

@@ -2,7 +2,7 @@ VolcanoPlot <- function (toptable, lab, x, y, pCutUse, auto_Title = TRUE,selectL
   x], na.rm = TRUE)-0.1, max(toptable[, x], na.rm = TRUE)+0.1), ylim = c(-0.1, 
   max(-log10(toptable[, y]), na.rm = TRUE) + 0.1), xlab = bquote(~Log[2] ~ 
   "fold change"), ylab = bquote(~-Log[10] ~ italic(P)), axisLabSize = 16, 
-  pCutoff = 0.05, pLabellingCutoff = pCutoff, FCcutoff = 2, 
+  pCutoff = 0.05, pLabellingCutoff = 0.05, FCcutoff = 2, 
   title = "", titleLabSize = 16, transcriptPointSize = 0.8, 
   transcriptLabSize = 3, col = c("black", "black", 
     "black", "red2","blue2"), colOverride = NULL, colAlpha = 1/2, 

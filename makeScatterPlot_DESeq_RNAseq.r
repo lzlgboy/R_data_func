@@ -7,7 +7,7 @@ df.plot <- as.data.frame(cbind(as.data.frame(x),as.data.frame(y)))
 
 
 df.plot$padj <- df$padj
-df.plot$log2FoldChange <- log((df.plot[,2]+0.1)/(df.plot[,1]+0.1),2) # Y/X
+df.plot$log2FoldChange <- log((df.plot[,2]+0.01)/(df.plot[,1]+0.01),2) # Y/X
 
 fc_log2_threshold <- log(FC_threshold,2)
 

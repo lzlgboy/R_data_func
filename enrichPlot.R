@@ -65,9 +65,13 @@ plotEnrichBar <-  function(df_enrich, n_top= 15, select_term = NULL ,is_up = TRU
 
 
 
-plotEnrichBar_UpDown <- function(GO_up, GO_down, n_top= 15, select_term = NULL, line_wrap = 80,font_size=16) {
+plotEnrichBar_UpDown <- function(GO_up, GO_down, n_top= 15, select_term = NULL, line_wrap = 80,font_size=16,title=NULL) {
     plt_Up <- plotEnrichBar(GO_up,is_up = TRUE,font_size = font_size)
     plt_Down <- plotEnrichBar(GO_down,is_up = FALSE,font_size = font_size)
-    plt_combined <- cowplot::plot_grid(plt_Up,plt_Down,ncol = 1, align = "none")
+    
+    title <- ggdraw() + draw_label(title, fontface='bold') 
+
+    p_temp <- cowplot::plot_grid(plt_Up,plt_Down,ncol = 1, align = "none") 
+    plt_combined <- cowplot::plot_grid(title,p_temp,ncol =1 ,rel_heights=c(0.1,1) ) # rel_heights values control title margins
     return (plt_combined)
 }

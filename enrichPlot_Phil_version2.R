@@ -89,9 +89,9 @@ plotEnrichBar <-  function(df_enrich, n_top= 15, select_term = NULL ,is_up = TRU
 }                                  
 
 # ============= Combine Up and Down Plot ==========================
-plotEnrichBar_UpDown <- function(GO_up, GO_down, n_top= 15, select_term = NULL, line_wrap = 80,font_size=16,title=NULL) {
-    plt_Up <- plotEnrichBar(GO_up,is_up = TRUE,font_size = font_size, line_wrap = line_wrap)
-    plt_Down <- plotEnrichBar(GO_down,is_up = FALSE,font_size = font_size, line_wrap = line_wrap)
+plotEnrichBar_UpDown <- function(GO_up, GO_down, n_top_up= 15, n_top_down = 15, select_term = NULL, line_wrap = 80,font_size=16,title=NULL) {
+    plt_Up <- plotEnrichBar(GO_up,is_up = TRUE,font_size = font_size, line_wrap = line_wrap,n_top = n_top_up)
+    plt_Down <- plotEnrichBar(GO_down,is_up = FALSE,font_size = font_size, line_wrap = line_wrap,n_top = n_top_down)
     
     title <- ggdraw() + draw_label(title, fontface='bold') 
 

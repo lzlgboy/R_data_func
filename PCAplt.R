@@ -37,7 +37,7 @@ PCAplt <- function(df = data.frame,pc=c(1,2),groupVector=NULL,sampleNameVector=N
                 in.list <- sampleNameVector %in% selectNameVector
                 sampleNameVector[!in.list] <- ""
             }
-            p <- p + geom_text_repel(aes(label = sampleNameVector),box.padding=unit(1,"lines"),size = fontSzie,max.overlaps = getOption("ggrepel.max.overlaps", default = 10))
+            p <- p + geom_text_repel(aes(label = sampleNameVector),box.padding=unit(0.5,"lines"),size = fontSzie,max.overlaps = getOption("ggrepel.max.overlaps", default = 100),force = 10)
         }
         p
     }else{
@@ -49,7 +49,7 @@ PCAplt <- function(df = data.frame,pc=c(1,2),groupVector=NULL,sampleNameVector=N
                 in.list <- sampleNameVector %in% selectNameVector
                 sampleNameVector[!in.list] <- ""
             }
-            p1 <- p1 + geom_text_repel(aes(label = sampleNameVector),box.padding=unit(1,"lines"),size = fontSzie,max.overlaps = getOption("ggrepel.max.overlaps", default = 10),)
+            p1 <- p1 + geom_text_repel(aes(label = sampleNameVector),box.padding=unit(0.5,"lines"),size = fontSzie,max.overlaps = getOption("ggrepel.max.overlaps", default = 100),force = 10)
         }
         if (!is.null(colorVector)) {
             p1 <- p1 + scale_colour_manual(values = colorVector)

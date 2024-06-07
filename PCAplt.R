@@ -37,7 +37,7 @@ PCAplt <- function(df = data.frame,pc=c(1,2),groupVector=NULL,sampleNameVector=N
                 in.list <- sampleNameVector %in% selectNameVector
                 sampleNameVector[!in.list] <- ""
             }
-            p <- p + geom_text_repel(aes(label = sampleNameVector),box.padding=unit(0.5,"lines"),size = fontSzie)
+            p <- p + geom_text_repel(aes(label = sampleNameVector),box.padding=unit(1,"lines"),size = fontSzie)
         }
         p
     }else{
@@ -49,7 +49,7 @@ PCAplt <- function(df = data.frame,pc=c(1,2),groupVector=NULL,sampleNameVector=N
                 in.list <- sampleNameVector %in% selectNameVector
                 sampleNameVector[!in.list] <- ""
             }
-            p1 <- p1 + geom_text_repel(aes(label = sampleNameVector),box.padding=unit(0.5,"lines"),size = fontSzie)
+            p1 <- p1 + geom_text_repel(aes(label = sampleNameVector),box.padding=unit(1,"lines"),size = fontSzie)
         }
         if (!is.null(colorVector)) {
             p1 <- p1 + scale_colour_manual(values = colorVector)

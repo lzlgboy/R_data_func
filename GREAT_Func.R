@@ -3,9 +3,8 @@ GREAT_func <- function(bed_grange = bed_grange, genome = 'hg38') {
     
     
     result <- list()
-    job.GREAT <- NULL
     suppressWarnings({
-    job.GREAT <- submitGreatJob(bed.Up.iHCO2.vs.iHCO.FC4,species = 'hg38')
+    job.GREAT <- submitGreatJob(bed_grange,species = 'hg38')
     result$table.GO.Molecular.Function = getEnrichmentTables(job.GREAT,ontology = "GO Molecular Function")
     result$table.GO.Biological.Process = getEnrichmentTables(job.GREAT,ontology = "GO Biological Process")
     result$table.GO.Cellular.Component = getEnrichmentTables(job.GREAT,ontology = "GO Cellular Component")

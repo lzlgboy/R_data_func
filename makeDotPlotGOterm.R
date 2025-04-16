@@ -24,10 +24,8 @@ df_top <- df_top %>% transform(Description = factor(Description, levels = rev(or
 
 ggplot(df_top, aes(x=GeneRatio, y=Description)) +
     geom_point(aes(size = Count, color = p.adjust)) +
-#     scale_x_discrete(drop=FALSE, labels=labelDF$labels) +   # drop=FALSE to show all category 
-    scale_x_continuous() +   # drop=FALSE to show all category 
-
-    scale_colour_gradient(limits=c(0, max(df_top10$p.adjust)), low="red",high="blue") +
+    scale_x_continuous() +  
+    scale_colour_gradient(limits=c(0, max(df_top$p.adjust)), low="red",high="blue") +
     theme_bw() #+
 #     theme(axis.title = element_blank())
 

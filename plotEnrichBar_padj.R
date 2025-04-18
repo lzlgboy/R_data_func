@@ -83,7 +83,7 @@ plotEnrichBar_padj <-  function(df_enrich, n_top= 15, select_term = NULL ,is_up 
             plot.margin = unit(c(0, 0, 0, 0), "cm")
         ) +
         theme(legend.position="none") +    
-        xlab("-log10(Pvalue)") 
+        xlab("-log10(Padj)") 
 
     return (plt)                               
 }                                  
